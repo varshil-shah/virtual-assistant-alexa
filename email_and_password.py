@@ -1,0 +1,2 @@
+passW = 'SendersEmailIdPassword'
+senderEmail = 'SendersEmailAddress'

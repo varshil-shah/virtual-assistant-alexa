@@ -6,6 +6,22 @@ Automate all the boring stuffs that we use in our daily life.
 ## Use case:
 You can save your time by using such automations and make your work easy
 
+## Installation:
+For installing all modules -
+`pip install -r requirements.txt`
+
+For installing complete project -
+`https://github.com/Varshil-Shah/Personal-Assistant.git`
+
+**Note**
+
+If there is an error while installing pyaudio,use the following in terminal.
+
+```cmd
+1. pip install pipwin
+2. pipwin install pyaudio
+```
+
 ## Features:
 1. You can get the information about every stuffs present on internet using wikipedia module.
 2. You can call google and ask your query and other stuffs.
@@ -25,10 +41,9 @@ You can save your time by using such automations and make your work easy
 3. playsound
 4. pyttsx3
 5. pyaudio
-6. SpeechRecognition
-7. smtplib
-8. pyautogui
-9. requests
+6. speech_recognition
+7. pyautogui
+8. requests
 
 ### Usage note:
 1. **For wikipedia:**

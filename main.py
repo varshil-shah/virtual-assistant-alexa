@@ -9,7 +9,7 @@ import speech_recognition as sr
 import smtplib
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from text import *
+from email_and_password import *
 from time import sleep
 from playsound import playsound
 import requests

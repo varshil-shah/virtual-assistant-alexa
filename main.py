@@ -12,15 +12,17 @@ from selenium.webdriver.common.keys import Keys
 from text import *
 from time import sleep
 from playsound import playsound
+import requests
+import pyautogui
 
 # creating a dictonary
 # you can add more peoples using comma in both dictonary
-Email_dic = {'Name of the person':'Email address of that person'}
-whatsApp_dic = {'Name of the person':'Name of that person in whatsApp'}
+Email_dic = {'Name of the person': 'Email address of that person'}
+whatsApp_dic = {'Name of the person': 'Name of that person in whatsApp'}
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
-engine.setProperty("rate",178)
+engine.setProperty("rate", 178)
 engine.setProperty('voice', voices[1].id)
 
 
@@ -40,6 +42,7 @@ def wishMe():
 
     speak('I am alexa, please tell me how may I help you')
 
+
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -47,35 +50,42 @@ def takeCommand():
         r.pause_threshold = 0.9  # gives an 1 second while talking
         audio = r.listen(source)
         try:
-            print('Recognizing...');
-            query = r.recognize_google(audio,language='en-in')
+            print('Recognizing...')
+            query = r.recognize_google(audio, language='en-in')
             print(f"You said: {query}\n")
         except Exception as e:
             print('Sorry, say that again please')
             return "None"
-        return query;
+        return query
 
-def sendMail(to,content):
-    server = smtplib.SMTP('smtp.gmail.com',587)
+
+def sendMail(to, content):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login(senderEmail,passW)
-    server.sendmail(senderEmail,to,content)
+    server.login(senderEmail, passW)
+    server.sendmail(senderEmail, to, content)
     server.close()
 
-def whatsApp(to,content):
+
+def whatsApp(to, content):
     options = webdriver.ChromeOptions()
-    options.add_argument('--user-data-dir=C:\\Users\\<Username>\\AppData\\Local\\Google\\Chrome\\User Data\\Default')
+    options.add_argument(
+        '--user-data-dir=C:\\Users\\<Username>\\AppData\\Local\\Google\\Chrome\\User Data\\Default')
     options.add_argument('--profile-directory=Default')
-    chrome_browser = webdriver.Chrome(executable_path='CHROME DRIVER PATH',options=options)
+    chrome_browser = webdriver.Chrome(
+        executable_path='CHROME DRIVER PATH', options=options)
     chrome_browser.get('https://web.whatsapp.com')
     sleep(15)
     try:
-        user = chrome_browser.find_element_by_xpath('//span[@title="{}"]'.format(whatsApp_dic[to]))
+        user = chrome_browser.find_element_by_xpath(
+            '//span[@title="{}"]'.format(whatsApp_dic[to]))
         user.click()
 
-        message_box = chrome_browser.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]').send_keys(content)
-        chrome_browser.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[3]/button/span').click()
+        message_box = chrome_browser.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[2]/div/div[2]').send_keys(content)
+        chrome_browser.find_element_by_xpath(
+            '//*[@id="main"]/footer/div[1]/div[3]/button/span').click()
 
         speak('Message send successfully')
         chrome_browser.close()
@@ -83,6 +93,7 @@ def whatsApp(to,content):
         print(e)
         speak('Failed to send whatsapp message')
         chrome_browser.close()
+
 
 if __name__ == '__main__':
     wishMe()
@@ -93,8 +104,8 @@ if __name__ == '__main__':
         # logic
         if 'wikipedia' in query:
             speak('Searching wikipedia...')
-            query = query.replace("wikipedia","")
-            result = wikipedia.summary(query,sentences=2)
+            query = query.replace("wikipedia", "")
+            result = wikipedia.summary(query, sentences=2)
             speak("According to wikipedia")
             print(result)
             speak(result)
@@ -107,9 +118,10 @@ if __name__ == '__main__':
             driver.maximize_window()
             try:
                 speak('Searching on google')
-                inputElements = driver.find_element_by_css_selector('input[name=q]')
+                inputElements = driver.find_element_by_css_selector(
+                    'input[name=q]')
                 inputElements.send_keys(search)
-                
+
                 # press Enter key,
                 speak(f"Showing all reults for {search}")
                 inputElements.send_keys(Keys.ENTER)
@@ -127,7 +139,8 @@ if __name__ == '__main__':
             driver.maximize_window()
             try:
                 speak('Searching on youtube')
-                inputElements = driver.find_element_by_css_selector('input[name=search_query]')
+                inputElements = driver.find_element_by_css_selector(
+                    'input[name=search_query]')
                 inputElements.send_keys(search)
                 inputElements.send_keys(Keys.ENTER)
                 speak(f"showing all the results for {search}")
@@ -138,7 +151,7 @@ if __name__ == '__main__':
                 ask = False
         elif 'stackoverflow' in query:
             speak('Searching for stackover flow')
-            webbrowser.open('www.stackoverflow.com');
+            webbrowser.open('www.stackoverflow.com')
             ask = True
         elif 'music' in query:
             speak('Playing music')
@@ -146,14 +159,15 @@ if __name__ == '__main__':
                 music_dir = 'Your Music directory path'
                 songs = os.listdir(music_dir)
                 # print(songs)
-                playingSong = random.choice(songs);
+                playingSong = random.choice(songs)
                 speak('I will play a random song for you')
                 print(playingSong)
                 playsound(f"{music_dir}\\{playingSong}")
                 ask = True
             except Exception as e:
                 print(e)
-                speak('There was an error while playing music, please try again to play music')
+                speak(
+                    'There was an error while playing music, please try again to play music')
                 ask = False
         elif 'time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
@@ -166,7 +180,7 @@ if __name__ == '__main__':
                 speak(f'{to} found')
                 speak('Please tell what message you want to send')
                 content = takeCommand()
-                whatsApp(to,content)
+                whatsApp(to, content)
                 ask = True
             else:
                 speak(f'{to} not found')
@@ -179,10 +193,10 @@ if __name__ == '__main__':
             try:
                 speak('To whom you want to send email')
                 to = takeCommand().lower()
-                if to in dic:
+                if to in Email_dic:
                     speak('What should I add in message')
                     content = takeCommand()
-                    sendMail(Email_dic[to],content)
+                    sendMail(Email_dic[to], content)
                     speak('Email has been sent successfully')
                     ask = True
                 else:
@@ -192,14 +206,35 @@ if __name__ == '__main__':
                 print(e)
                 speak('Something went wrong will sending mail')
                 ask = False
+        elif 'screenshot' in query:
+            try:
+                speak('Please tell the file name')
+                filename = takeCommand()
+                pyautogui.screenshot(
+                    f"D:\Python\VS code Python\AI\images\{filename}.png")
+                speak('Screenshot has been taken and store in images folder')
+                ask = True
+            except Exception as e:
+                speak('Unable to take screenshot')
+                ask = False
+        elif 'location' in query:
+            try:
+                res = requests.get('https://ipinfo.io/')
+                # converting str to json
+                data = res.json()
+                city = data['city']
+                speak(f"You are at {city}")
+                location = data['loc'].split(',')
+                latitude = location[0]
+                longitude = location[1]
+                speak(f"latitude {latitude} and logitude {longitude}")
+                print(f"You are at {city}")
+                print(f"latitude: {latitude} and logitude {longitude}")
+                ask = True
+            except Exception as e:
+                print(e)
+                speak('Unable to detect your location')
+                ask = False
         elif 'thank you' in query:
             speak('I am here to help,please let me know if you need anything else')
             ask = False
-            
-
-
-
-
-
-
-

@@ -25,7 +25,7 @@ You can save your time by using such automations and make your work easy
 3. playsound
 4. pyttsx3
 5. pyaudio
-6. speech_recognition
+6. SpeechRecognition
 7. smtplib
 8. pyautogui
 9. requests

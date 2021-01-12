@@ -57,6 +57,9 @@ If there is an error while installing pyaudio,use the following in terminal.
 11. You can find your geo-location.
 `Command: What is my location`.
 
+12. You can add alarm.
+`Command: Add alarm`.
+
 ***
 
 ### Usage note:
@@ -86,7 +89,10 @@ If there is an error while installing pyaudio,use the following in terminal.
     3. You have to provide folder name to save your images.
 7. **Location**
     You have to ask your geo-location, assistant will speak and print your location.
-
+    
+8. **Alarm**
+    1. You have to tell hour in 24hr format.
+    2. You have to tell minute.
 ***
 
 ## About the creator:

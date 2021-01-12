@@ -217,6 +217,26 @@ if __name__ == '__main__':
             except Exception as e:
                 speak('Unable to take screenshot')
                 ask = False
+        elif 'alarm' in query:
+            speak('Hey user please tell hour in 24 hour format')
+            speak('Please tell me hour')
+            hour = int(takeCommand())
+            # hour = int(input('Enter the hour in 24 hour format: '))
+            speak('Please tell me minute')
+            minute = int(takeCommand())
+            # minute = int(input('Enter the minute: '))
+            speak('You alarm has been added')
+            hasOccured = True
+            if type(hour) == int and type(minute) == int:
+                while (hasOccured):
+                    if hour == datetime.datetime.now().hour and minute == datetime.datetime.now().minute:
+                        playsound('alert_signal.mp3')
+                        hasOccured = False
+                        break
+                    else:
+                        hasOccured = True
+            else:
+                speak('Alarm not add successfully')
         elif 'location' in query:
             try:
                 res = requests.get('https://ipinfo.io/')

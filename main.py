@@ -152,23 +152,28 @@ if __name__ == '__main__':
         elif 'stackoverflow' in query:
             speak('Searching for stackover flow')
             webbrowser.open('www.stackoverflow.com')
-            ask = True
-        elif 'music' in query:
+            ask = Trueelif 'music' in query:
             speak('Playing music')
             try:
-                music_dir = 'Your Music directory path'
+                music_dir = 'Music directory path here'
                 songs = os.listdir(music_dir)
-                # print(songs)
-                playingSong = random.choice(songs)
                 speak('I will play a random song for you')
-                print(playingSong)
-                playsound(f"{music_dir}\\{playingSong}")
-                ask = True
+                done = True
+                while done:
+                    playingSong = random.choice(songs);
+                    print(playingSong)
+                    speak('Would you like to play the above printed song - Yes or No')
+                    yesOrNo = takeCommand().lower()
+                    if 'yes' in yesOrNo:
+                        playsound(f"{music_dir}\\{playingSong}")
+                        done = False
+                    else:
+                        speak('I will play one more random song for you')
+                        done = True
             except Exception as e:
                 print(e)
-                speak(
-                    'There was an error while playing music, please try again to play music')
-                ask = False
+                speak('There was an error while playing music, please try again to play music')
+
         elif 'time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"Sir, the time is {strTime}")

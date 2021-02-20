@@ -1,5 +1,8 @@
 # Personal Assistant using python
 
+## Youtube video link:
+https://youtu.be/U82ZoQCWvOQ
+
 ## Objective:
 Automate all the boring stuffs that we use in our daily life.
 
